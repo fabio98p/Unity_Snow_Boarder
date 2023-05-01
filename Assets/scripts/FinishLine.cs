@@ -1,20 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CrachDetector : MonoBehaviour
+public class FinishLine : MonoBehaviour
 {
     [SerializeField] float loadDelay = 0.5f;
-    [SerializeField] ParticleSystem crashEffect;
+    [SerializeField] ParticleSystem finishEffect;
+
+    bool gameEnd = false;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Ground")
+        if (collision.tag == "Player" && !gameEnd)
         {
-            crashEffect.Play();
+            finishEffect.Play();
+            GetComponent<AudioSource>().Play();
             Invoke("ReloadScene", loadDelay);
-
+            gameEnd = true;
         }
     }
     void ReloadScene()

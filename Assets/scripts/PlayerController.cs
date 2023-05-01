@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb2d;
     SurfaceEffector2D[] surfacesEffector2d;
+    bool canMove = true;
 
     void Start()
     {
@@ -19,9 +20,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotatePlayer();
-        RespondToBoost();
+        if (canMove)
+        {
+            RotatePlayer();
+            RespondToBoost();
+        }
     }
+
+    public void DisableControl()
+    {
+        canMove = false;
+    }
+
     void RotatePlayer()
     {
         float steerAmount = Input.GetAxis("Horizontal") * tougeAmount * Time.deltaTime;
